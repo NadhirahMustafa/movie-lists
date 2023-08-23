@@ -1,21 +1,12 @@
 import React, { useState } from 'react';
-import '../styles/Dashboard.scss';
-import { search } from '../constants/message';
 import { Grid, TextField, Button } from '@mui/material';
+import { movieInterface, searchProps } from '../interface/interface';
+import { search } from '../constants/message';
+import '../styles/Dashboard.scss';
 
-interface movieListProps {
-    init: string[];
-    onSearch: (searchTerm: string[]) => void;
-    resetList: () => void;
-}
-
-const Search: React.FC<movieListProps> = ({ init, onSearch, resetList }) => {
+const Search: React.FC<searchProps> = ({ init, onSearch, resetList }) => {
 
     const [value, setValue] = useState('');
-
-    const handleInputChange = (e: any) => {
-        setValue(e.target.value);
-    };
 
     const handleClick = () => {
         filteredData();
@@ -28,7 +19,7 @@ const Search: React.FC<movieListProps> = ({ init, onSearch, resetList }) => {
 
     const filteredData = () => {
         let result = value !== '' ? init.filter(
-            (movie: any) =>
+            (movie: movieInterface) =>
                 movie.title.toLowerCase().includes(value.toString().toLowerCase())
         ) : init
         onSearch(result);
@@ -41,7 +32,7 @@ const Search: React.FC<movieListProps> = ({ init, onSearch, resetList }) => {
                     <TextField
                         type="text"
                         value={value}
-                        onChange={handleInputChange}
+                        onChange={(e)=>setValue(e.target.value)}
                         placeholder={search.search_movie}
                         size='small'
                     />

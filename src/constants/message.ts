@@ -1,3 +1,7 @@
+export const common = {
+    alertMessage: 'Something Wrong on The Server, Please Try Again',
+};
+
 export const dashboard = {
     title: 'Movie dashboard',
     no_result: 'Sorry, no result found!',
