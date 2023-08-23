@@ -8,8 +8,7 @@ import '../styles/Dashboard.scss';
 Modal.setAppElement('#root');
 
 const DetailsPopup: React.FC<PopupModalProps> = ({ isOpen, onClose, detailsData }) => {
-  console.log('details: ', detailsData);
-
+  
   return (
     <Modal
       isOpen={isOpen}

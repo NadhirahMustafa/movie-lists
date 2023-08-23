@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Grid, Button } from "@mui/material";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { getMovieDetails } from "../service/api.service";
 import { MovieDetailsInterface, movieListProps } from "../interface/interface";
+import { common } from "../constants/message";
 import DetailsPopup from "./DetailsPopup";
 
 const MovieList: React.FC<movieListProps> = ({ list, viewType }) => {
@@ -43,27 +45,15 @@ const MovieList: React.FC<movieListProps> = ({ list, viewType }) => {
     setModalOpen(false);
   };
 
-  const onClickCell = (c: MovieDetailsInterface) => {
+  const onClickCell = async (c: MovieDetailsInterface) => {
     setIsSelected(c.id);
-    const fetchMovieDetails = {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNTUzYmRkZGNiMGQxNjJhNmI0OWEzMzEyMWM0OGRiNSIsInN1YiI6IjY0ZDVlMWRjZDEwMGI2MDBhZGEwNjViMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.hTRNv114THusMoyraZXWGg6nW_PgCG7fFZvnB5BQhJQ",
-      },
-    };
-
-    fetch(
-      `https://api.themoviedb.org/3/movie/${c.id}?language=en-US`,
-      fetchMovieDetails
-    )
-      .then((response) => response.json())
-      .then((response) => {
-        setMovieDetails(response);
-        openModal();
-      })
-      .catch((err) => alert(err));
+    let res = await getMovieDetails(c.id);
+    if (res) {
+      setMovieDetails(res);
+      openModal();
+    } else {
+      alert(common.alertMessage);
+    }
   };
 
   return (

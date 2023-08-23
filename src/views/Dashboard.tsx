@@ -1,71 +1,59 @@
 import React, { useEffect, useState } from "react";
 import { Grid, Button } from "@mui/material";
 import { movieInterface } from "../interface/interface";
+import { getNowPlayingMovies, getTopRatedMovies } from "../service/api.service";
 import MovieList from "./MovieList";
 import Search from "./Search";
 import CardSkeleton from "../component/CardSkeleton";
-import { dashboard } from "../constants/message";
+import { dashboard, common } from "../constants/message";
 import "../styles/Dashboard.scss";
 
 const Dashboard: React.FC = () => {
   const [list, setList] = useState<movieInterface[]>([]);
-  const [topRatedList, setTopRatedList] = useState([]);
-  const [initList, setInitList] = useState([]);
+  const [topRatedList, setTopRatedList] = useState<movieInterface[]>([]);
+  const [initList, setInitList] = useState<movieInterface[]>([]);
   const [numResult, setNumResult] = useState(0);
   const [loading, setLoading] = useState(false);
   const [init, setInit] = useState(false);
   const [typeMovie, setTypeMovie] = useState(0);
   const [viewType, setViewType] = useState(0);
 
+  const fetchNowPlayingList = async () => {
+    let res = await getNowPlayingMovies();
+    if (res) {
+      setList(res);
+      setInitList(res);
+      setNumResult(res.length);
+      setLoading(false);
+      setInit(true);
+      setTypeMovie(1);
+      setViewType(2);
+    } else {
+      alert(common.alertMessage);
+    }
+  };
+
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {
-      const fetchData = {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNTUzYmRkZGNiMGQxNjJhNmI0OWEzMzEyMWM0OGRiNSIsInN1YiI6IjY0ZDVlMWRjZDEwMGI2MDBhZGEwNjViMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.hTRNv114THusMoyraZXWGg6nW_PgCG7fFZvnB5BQhJQ",
-        },
-      };
-
-      fetch(
-        "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1",
-        fetchData
-      )
-        .then((response) => response.json())
-        .then((response) => {
-          setList(response.results);
-          setInitList(response.results);
-          setNumResult(response.results.length);
-          setLoading(false);
-          setInit(true);
-          setTypeMovie(1);
-          setViewType(2);
-        })
-        .catch((err) => alert(err));
-    }, 3000);
+      fetchNowPlayingList();
+    }, 1000);
   }, []);
 
-  useEffect(() => {
-    const fetchTopRated = {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNTUzYmRkZGNiMGQxNjJhNmI0OWEzMzEyMWM0OGRiNSIsInN1YiI6IjY0ZDVlMWRjZDEwMGI2MDBhZGEwNjViMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.hTRNv114THusMoyraZXWGg6nW_PgCG7fFZvnB5BQhJQ",
-      },
-    };
+  const fetchTopRatedList = async () => {
+    let res = await getTopRatedMovies();
+    if (res) {
+      setTopRatedList(res);
+    } else {
+      alert(common.alertMessage);
+    }
+  };
 
-    fetch(
-      "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1",
-      fetchTopRated
-    )
-      .then((response) => response.json())
-      .then((response) => {
-        setTopRatedList(response.results);
-      })
-      .catch((err) => alert(err));
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      fetchTopRatedList();
+    }, 1000);
   }, []);
 
   const setListNew = (s: movieInterface[]) => {
@@ -185,7 +173,7 @@ const Dashboard: React.FC = () => {
         <Grid className="dashboard--page-title">{dashboard.title}</Grid>
         {renderMovieType()}
         {renderDataView()}
-        <Search init={list} onSearch={setListNew} resetList={resetList} />
+        <Search init={typeMovie === 1 ? initList : topRatedList} onSearch={setListNew} resetList={resetList} />
         {loading && <CardSkeleton />}
         {!loading && numResult !== 0 ? hasResult() : noResult()}
       </Grid>
