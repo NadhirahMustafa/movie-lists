@@ -1,17 +1,14 @@
 import React from 'react';
 import Modal from 'react-modal';
+import { Grid, Button } from '@mui/material';
+import { PopupModalProps } from '../interface/interface';
 import { detailsPopup } from '../constants/message';
 import '../styles/Dashboard.scss';
-import { Grid, Button } from '@mui/material';
 
-interface PopupModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  detailsData: any;
-}
 Modal.setAppElement('#root');
 
 const DetailsPopup: React.FC<PopupModalProps> = ({ isOpen, onClose, detailsData }) => {
+  console.log('details: ', detailsData);
 
   return (
     <Modal
