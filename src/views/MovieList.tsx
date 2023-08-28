@@ -38,10 +38,6 @@ const MovieList: React.FC<movieListProps> = ({ list, viewType }) => {
   });
   const [isSelected, setIsSelected] = useState<number>(0);
 
-  const openModal = () => {
-    setModalOpen(true);
-  };
-
   const closeModal = () => {
     setModalOpen(false);
   };
@@ -51,7 +47,7 @@ const MovieList: React.FC<movieListProps> = ({ list, viewType }) => {
     let res = await getMovieDetails(c.id);
     if (res) {
       setMovieDetails(res);
-      openModal();
+      setModalOpen(true);
     } else {
       alert(common.alertMessage);
     }
