@@ -47,7 +47,7 @@ const DetailsPopup: React.FC<PopupModalProps> = ({ isOpen, onClose, detailsData 
         </Grid>
 
         <Grid container className='details--justify'>
-          <Grid item className='details--padding-top'><Button onClick={onClose}>{detailsPopup.close}</Button></Grid>
+          <Grid item className='details--padding-top'><Button onClick={onClose}><p className='button--color'>{detailsPopup.close}</p></Button></Grid>
         </Grid>
       </Grid>
     </Modal>

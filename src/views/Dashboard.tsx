@@ -116,16 +116,16 @@ const Dashboard: React.FC = () => {
   const renderMovieType = () => {
     return (
       <Grid container>
-        <Grid item className={"search--button-padding"}>
-          <Button className="search--button" onClick={handleNowPlaying}>
-            <p className={typeMovie === 1 ? "search--button-active" : ""}>
+        <Grid item className="search--button-padding">
+          <Button onClick={handleNowPlaying}>
+            <p className={typeMovie === 1 ? "search--button-active button--color button--libre-style" : "button--color button--libre-style"}>
               {dashboard.now_playing}
             </p>
           </Button>
         </Grid>
         <Grid item>
-          <Button className="search--button" onClick={handleTopRated}>
-            <p className={typeMovie === 2 ? "search--button-active" : ""}>
+          <Button onClick={handleTopRated}>
+            <p className={typeMovie === 2 ? "search--button-active button--color button--libre-style" : "button--color button--libre-style"}>
               {dashboard.top_rated}
             </p>
           </Button>
@@ -138,12 +138,12 @@ const Dashboard: React.FC = () => {
     return (
       <Grid container>
         <Grid item className={"search--button-padding"}>
-          <Button className="search--button" onClick={handleListView}>
+          <Button onClick={handleListView}>
             <p
               className={
                 viewType === 1
-                  ? "search--button-active dashboard--small-font"
-                  : "dashboard--small-font"
+                  ? "search--button-active dashboard--small-font button--color button--libre-style"
+                  : "dashboard--small-font button--color button--libre-style"
               }
             >
               {dashboard.list}
@@ -151,12 +151,12 @@ const Dashboard: React.FC = () => {
           </Button>
         </Grid>
         <Grid item>
-          <Button className="search--button" onClick={handleGridView}>
+          <Button onClick={handleGridView}>
             <p
               className={
                 viewType === 2
-                  ? "search--button-active dashboard--small-font"
-                  : "dashboard--small-font"
+                  ? "search--button-active dashboard--small-font button--color button--libre-style"
+                  : "dashboard--small-font button--color button--libre-style"
               }
             >
               {dashboard.grid}
@@ -170,7 +170,7 @@ const Dashboard: React.FC = () => {
   return (
     <>
       <Grid className="dashboard--margin-bottom">
-        <Grid className="dashboard--page-title">{dashboard.title}</Grid>
+        <Grid className="dashboard--page-title dashboard--header">{dashboard.title}</Grid>
         {renderMovieType()}
         {renderDataView()}
         <Search init={typeMovie === 1 ? initList : topRatedList} onSearch={setListNew} resetList={resetList} />

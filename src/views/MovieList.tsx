@@ -76,7 +76,7 @@ const MovieList: React.FC<movieListProps> = ({ list, viewType }) => {
                     src={`https://image.tmdb.org/t/p/original${row.poster_path}`}
                     width={100}
                   />
-                  <Grid>{row.title}</Grid>
+                  <Grid><p className="button--color button--raleway-style">{row.title}</p></Grid>
                 </Grid>
               </Button>
             </Grid>
