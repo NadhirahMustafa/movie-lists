@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Grid, Button } from "@mui/material";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { getMovieDetails } from "../service/api.service";
-import { MovieDetailsInterface, movieListProps } from "../interface/interface";
+import { MovieDetailsInterface, movieListProps, movieInterface } from "../interface/interface";
 import { common } from "../constants/message";
 import DetailsPopup from "./DetailsPopup";
 
@@ -45,7 +45,7 @@ const MovieList: React.FC<movieListProps> = ({ list, viewType }) => {
     setModalOpen(false);
   };
 
-  const onClickCell = async (c: MovieDetailsInterface) => {
+  const onClickCell = async (c: movieInterface) => {
     setIsSelected(c.id);
     let res = await getMovieDetails(c.id);
     if (res) {
@@ -59,7 +59,7 @@ const MovieList: React.FC<movieListProps> = ({ list, viewType }) => {
   return (
     <Grid>
       <Grid className="movie-list--card-arr">
-        {list.map((row: MovieDetailsInterface, index: number) => (
+        {list.map((row: movieInterface, index: number) => (
           <Grid
             key={index}
             className={
