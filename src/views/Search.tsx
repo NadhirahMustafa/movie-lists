@@ -37,8 +37,8 @@ const Search: React.FC<searchProps> = ({ init, onSearch, resetList }) => {
                         size='small'
                     />
                 </Grid>
-                <Grid item className='search--button-padding'><Button className='search--button' onClick={handleClick}>{search.search}</Button></Grid>
-                <Grid item><Button className='search--button' onClick={handleReset}>{search.reset}</Button></Grid>
+                <Grid item className='search--button-padding'><Button onClick={handleClick}><p className="button--color button--libre-style">{search.search}</p></Button></Grid>
+                <Grid item><Button onClick={handleReset}><p className="button--color button--libre-style">{search.reset}</p></Button></Grid>
             </Grid>
         </Grid>
     );

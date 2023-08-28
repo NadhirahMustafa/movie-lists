@@ -6,6 +6,7 @@ import MovieList from "./MovieList";
 import Search from "./Search";
 import CardSkeleton from "../component/CardSkeleton";
 import { dashboard, common } from "../constants/message";
+import { viewConstant, typeConstant } from "../constants/constant";
 import "../styles/Dashboard.scss";
 
 const Dashboard: React.FC = () => {
@@ -15,8 +16,8 @@ const Dashboard: React.FC = () => {
   const [numResult, setNumResult] = useState(0);
   const [loading, setLoading] = useState(false);
   const [init, setInit] = useState(false);
-  const [typeMovie, setTypeMovie] = useState(0);
-  const [viewType, setViewType] = useState(0);
+  const [typeMovie, setTypeMovie] = useState('');
+  const [viewType, setViewType] = useState('');
 
   const fetchNowPlayingList = async () => {
     let res = await getNowPlayingMovies();
@@ -26,8 +27,8 @@ const Dashboard: React.FC = () => {
       setNumResult(res.length);
       setLoading(false);
       setInit(true);
-      setTypeMovie(1);
-      setViewType(2);
+      setTypeMovie(typeConstant.NOW_PLAYING);
+      setViewType(viewConstant.GRID);
     } else {
       alert(common.alertMessage);
     }
@@ -89,24 +90,16 @@ const Dashboard: React.FC = () => {
 
   const handleTopRated = () => {
     setList(topRatedList);
-    setTypeMovie(2);
+    setTypeMovie(typeConstant.TOP_RATED);
   };
 
   const handleNowPlaying = () => {
     setList(initList);
-    setTypeMovie(1);
-  };
-
-  const handleListView = () => {
-    setViewType(1);
-  };
-
-  const handleGridView = () => {
-    setViewType(2);
+    setTypeMovie(typeConstant.NOW_PLAYING);
   };
 
   const resetList = () => {
-    setList(typeMovie === 1 ? initList : topRatedList);
+    setList(typeMovie === typeConstant.NOW_PLAYING ? initList : topRatedList);
   };
 
   useEffect(() => {
@@ -116,16 +109,16 @@ const Dashboard: React.FC = () => {
   const renderMovieType = () => {
     return (
       <Grid container>
-        <Grid item className={"search--button-padding"}>
-          <Button className="search--button" onClick={handleNowPlaying}>
-            <p className={typeMovie === 1 ? "search--button-active" : ""}>
+        <Grid item className="search--button-padding">
+          <Button onClick={handleNowPlaying}>
+            <p className={typeMovie === typeConstant.NOW_PLAYING ? "search--button-active button--color button--libre-style" : "button--color button--libre-style"}>
               {dashboard.now_playing}
             </p>
           </Button>
         </Grid>
         <Grid item>
-          <Button className="search--button" onClick={handleTopRated}>
-            <p className={typeMovie === 2 ? "search--button-active" : ""}>
+          <Button onClick={handleTopRated}>
+            <p className={typeMovie === typeConstant.TOP_RATED ? "search--button-active button--color button--libre-style" : "button--color button--libre-style"}>
               {dashboard.top_rated}
             </p>
           </Button>
@@ -138,12 +131,12 @@ const Dashboard: React.FC = () => {
     return (
       <Grid container>
         <Grid item className={"search--button-padding"}>
-          <Button className="search--button" onClick={handleListView}>
+          <Button onClick={() => setViewType(viewConstant.LIST)}>
             <p
               className={
-                viewType === 1
-                  ? "search--button-active dashboard--small-font"
-                  : "dashboard--small-font"
+                viewType === viewConstant.LIST
+                  ? "search--button-active dashboard--small-font button--color button--libre-style"
+                  : "dashboard--small-font button--color button--libre-style"
               }
             >
               {dashboard.list}
@@ -151,12 +144,12 @@ const Dashboard: React.FC = () => {
           </Button>
         </Grid>
         <Grid item>
-          <Button className="search--button" onClick={handleGridView}>
+          <Button onClick={() => setViewType(viewConstant.GRID)}>
             <p
               className={
-                viewType === 2
-                  ? "search--button-active dashboard--small-font"
-                  : "dashboard--small-font"
+                viewType === viewConstant.GRID
+                  ? "search--button-active dashboard--small-font button--color button--libre-style"
+                  : "dashboard--small-font button--color button--libre-style"
               }
             >
               {dashboard.grid}
@@ -170,10 +163,10 @@ const Dashboard: React.FC = () => {
   return (
     <>
       <Grid className="dashboard--margin-bottom">
-        <Grid className="dashboard--page-title">{dashboard.title}</Grid>
+        <Grid className="dashboard--page-title dashboard--header">{dashboard.title}</Grid>
         {renderMovieType()}
         {renderDataView()}
-        <Search init={typeMovie === 1 ? initList : topRatedList} onSearch={setListNew} resetList={resetList} />
+        <Search init={typeMovie === typeConstant.NOW_PLAYING ? initList : topRatedList} onSearch={setListNew} resetList={resetList} />
         {loading && <CardSkeleton />}
         {!loading && numResult !== 0 ? hasResult() : noResult()}
       </Grid>

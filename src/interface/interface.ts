@@ -56,6 +56,17 @@ export interface PopupModalProps {
 }
 
 export interface movieListProps {
-  list: any[];
-  viewType: number;
+  list: movieInterface[];
+  viewType: string;
+}
+
+export interface genresInterface {
+  id: number;
+  name: string;
+}
+
+export interface languageInterface {
+  english_name: string;
+  iso_639_1: string;
+  name: string;
 }

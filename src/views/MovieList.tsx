@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Grid, Button } from "@mui/material";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { getMovieDetails } from "../service/api.service";
-import { MovieDetailsInterface, movieListProps } from "../interface/interface";
+import { MovieDetailsInterface, movieListProps, movieInterface } from "../interface/interface";
 import { common } from "../constants/message";
+import { viewConstant } from "../constants/constant";
 import DetailsPopup from "./DetailsPopup";
 
 const MovieList: React.FC<movieListProps> = ({ list, viewType }) => {
@@ -37,20 +38,16 @@ const MovieList: React.FC<movieListProps> = ({ list, viewType }) => {
   });
   const [isSelected, setIsSelected] = useState<number>(0);
 
-  const openModal = () => {
-    setModalOpen(true);
-  };
-
   const closeModal = () => {
     setModalOpen(false);
   };
 
-  const onClickCell = async (c: MovieDetailsInterface) => {
+  const onClickCell = async (c: movieInterface) => {
     setIsSelected(c.id);
     let res = await getMovieDetails(c.id);
     if (res) {
       setMovieDetails(res);
-      openModal();
+      setModalOpen(true);
     } else {
       alert(common.alertMessage);
     }
@@ -59,11 +56,11 @@ const MovieList: React.FC<movieListProps> = ({ list, viewType }) => {
   return (
     <Grid>
       <Grid className="movie-list--card-arr">
-        {list.map((row: MovieDetailsInterface, index: number) => (
+        {list.map((row: movieInterface, index: number) => (
           <Grid
             key={index}
             className={
-              viewType === 1 ? "movie-list--card-grid" : "movie-list--card-list"
+              viewType === viewConstant.LIST ? "movie-list--card-list" : "movie-list--card-grid"
             }
           >
             <Grid
@@ -76,7 +73,7 @@ const MovieList: React.FC<movieListProps> = ({ list, viewType }) => {
                     src={`https://image.tmdb.org/t/p/original${row.poster_path}`}
                     width={100}
                   />
-                  <Grid>{row.title}</Grid>
+                  <Grid><p className="button--color button--raleway-style">{row.title}</p></Grid>
                 </Grid>
               </Button>
             </Grid>
