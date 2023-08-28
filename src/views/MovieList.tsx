@@ -4,6 +4,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { getMovieDetails } from "../service/api.service";
 import { MovieDetailsInterface, movieListProps, movieInterface } from "../interface/interface";
 import { common } from "../constants/message";
+import { viewConstant } from "../constants/constant";
 import DetailsPopup from "./DetailsPopup";
 
 const MovieList: React.FC<movieListProps> = ({ list, viewType }) => {
@@ -63,7 +64,7 @@ const MovieList: React.FC<movieListProps> = ({ list, viewType }) => {
           <Grid
             key={index}
             className={
-              viewType === 1 ? "movie-list--card-grid" : "movie-list--card-list"
+              viewType === viewConstant.LIST ? "movie-list--card-list" : "movie-list--card-grid"
             }
           >
             <Grid

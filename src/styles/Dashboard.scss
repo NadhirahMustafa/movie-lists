@@ -84,14 +84,14 @@
 }
 
 .movie-list {
-  &--card-list {
+  &--card-grid {
     width: 200px;
     height: 100%;
     font-size: 20px;
     margin-right: 8px;
     margin-bottom: 10px;
   }
-  &--card-grid {
+  &--card-list {
     width: 100%;
     height: 100%;
     font-size: 20px;
