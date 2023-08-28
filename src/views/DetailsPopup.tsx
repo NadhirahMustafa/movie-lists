@@ -18,10 +18,10 @@ const DetailsPopup: React.FC<PopupModalProps> = ({ isOpen, onClose, detailsData 
     >
       <Grid className='details--padding'>
 
-        <Grid className='details--justify'>
+        <Grid className='common--justify'>
           <img src={`https://image.tmdb.org/t/p/original${detailsData.poster_path}`} width={100} />
         </Grid>
-        <Grid className='details--justify'>
+        <Grid className='common--justify'>
           <b>{detailsData.title}</b>
         </Grid>
         <Grid className='details--padding-top'>
@@ -46,7 +46,7 @@ const DetailsPopup: React.FC<PopupModalProps> = ({ isOpen, onClose, detailsData 
 
         </Grid>
 
-        <Grid container className='details--justify'>
+        <Grid container className='common--justify'>
           <Grid item className='details--padding-top'><Button onClick={onClose}><p className='button--color'>{detailsPopup.close}</p></Button></Grid>
         </Grid>
       </Grid>

@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { Grid, Button } from "@mui/material";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { getMovieDetails } from "../service/api.service";
-import { MovieDetailsInterface, movieListProps, movieInterface } from "../interface/interface";
+import {
+  MovieDetailsInterface,
+  movieListProps,
+  movieInterface,
+} from "../interface/interface";
 import { common } from "../constants/message";
 import { viewConstant } from "../constants/constant";
 import DetailsPopup from "./DetailsPopup";
@@ -60,7 +64,9 @@ const MovieList: React.FC<movieListProps> = ({ list, viewType }) => {
           <Grid
             key={index}
             className={
-              viewType === viewConstant.LIST ? "movie-list--card-list" : "movie-list--card-grid"
+              viewType === viewConstant.LIST
+                ? "movie-list--card-list"
+                : "movie-list--card-grid"
             }
           >
             <Grid
@@ -72,8 +78,14 @@ const MovieList: React.FC<movieListProps> = ({ list, viewType }) => {
                     className="fade-in"
                     src={`https://image.tmdb.org/t/p/original${row.poster_path}`}
                     width={100}
+                    onMouseEnter={(e)=>e.currentTarget.classList.add("image-enlarged")}
+                    onMouseLeave={(e)=>e.currentTarget.classList.remove("image-enlarged")}
                   />
-                  <Grid><p className="button--color button--raleway-style">{row.title}</p></Grid>
+                  <Grid>
+                    <p className="button--color button--raleway-style">
+                      {row.title}
+                    </p>
+                  </Grid>
                 </Grid>
               </Button>
             </Grid>
