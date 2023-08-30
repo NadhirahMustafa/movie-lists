@@ -10,8 +10,8 @@
   }
 }
 .image-enlarged {
-  transform: scale(1.2); /* Increase the scale for the enlargement effect */
-  transition: transform 0.3s ease; /* Add a smooth transition on hover */
+  transform: scale(1.2);
+  transition: transform 0.3s ease;
 }
 .common {
   &--button-padding {
